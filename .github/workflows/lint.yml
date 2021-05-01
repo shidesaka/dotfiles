@@ -1,0 +1,29 @@
+---
+name: Check syntax
+
+on:
+  push:
+    path:
+      - 'zsh*'
+    branches:
+      - main
+  pull_request:
+    path:
+      - 'zsh*'
+    branches:
+      - main
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        zsh: ['.zshrc', '.zsh_prompt']
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install packages
+        run: sudo apt-get install --yes zsh
+
+      - name: Check syntax
+        run: zsh -n ${{matrix.zsh}} || return 1

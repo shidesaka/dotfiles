@@ -1,0 +1,31 @@
+---
+name: Test dotfiles on macOS
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install packages
+        run: brew install tmux zsh
+
+      - name: Test install
+        run: make install
+
+      - name: Da Capo for idempotent
+        run: make install
+
+      - name: Test uninstall
+        run: make clean
+
+      - name: Da Capo for idempotent
+        run: make clean
