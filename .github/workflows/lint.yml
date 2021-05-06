@@ -3,12 +3,12 @@ name: Check syntax
 
 on:
   push:
-    path:
+    paths:
       - 'zsh*'
     branches:
       - main
   pull_request:
-    path:
+    paths:
       - 'zsh*'
     branches:
       - main
