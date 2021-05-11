@@ -1,10 +1,10 @@
 SHELL=/bin/bash
-DOTFILES = .alacritty.yml .asdf .tool-versions .tmux.conf .vim .vimrc .zplug .zshrc .zsh_prompt
+DOTFILES = .alacritty.yml .asdf .gitconfig .tool-versions .tmux.conf .vim .vimrc .zplug .zshrc .zsh_prompt
 
 .PHONY: clean $(DOTFILES)
 
 all: clean install
-install: alacritty tmux tool-versions asdf vim zsh
+install: alacritty git tmux tool-versions asdf vim zsh
 clean: $(foreach f, $(DOTFILES), remove-$(f))
 
 alacritty: $(foreach f, $(filter .alacritty.yml, $(DOTFILES)), link-$(f))
@@ -19,6 +19,8 @@ ifeq (,$(wildcard $(HOME)/.asdf))
 endif
 	@. $(HOME)/.asdf/asdf.sh && asdf plugin add golang || true
 	@. $(HOME)/.asdf/asdf.sh && asdf install
+
+git: $(foreach f, $(filter .gitconfig, $(DOTFILES)), link-$(f))
 
 vim: $(foreach f, $(filter .vimrc, $(DOTFILES)), link-$(f)) vim-plug
 
