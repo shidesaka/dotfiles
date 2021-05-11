@@ -58,6 +58,11 @@ _update_prompt() {
     [[ -n "$vcs_info_msg_2_" ]] && messages+=("%F{160}${vcs_info_msg_2_}%f")
     prompt+=" on${(j: :)messages}"
   fi
+  local virtualenv=$(echo $VIRTUAL_ENV)
+  if [ ! -z ${virtualenv} ]; then
+    local venv=$(basename $(dirname $virtualenv))
+    prompt+=" venv:${venv}"
+  fi
   prompt+=" %F{240}[%D{%Y-%m-%d %H:%M:%S}]%f"
   print $prompt
 }
